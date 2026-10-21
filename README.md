@@ -4,14 +4,17 @@
 
 **Версия:** 1.1.0. **Файл библиотеки:** `RockUI.lua`.
 
+**Репозиторий:** [rockscripter/sklad](https://github.com/rockscripter/sklad). **Ветка:** `main`.
+
 Watermark исходного Rock Hub **уже встроена в RockUI.lua**: появляется автоматически при создании окна, показывает FPS / ping / время и открывает либо закрывает это окно. Отдельно подключать её не нужно.
 
-В репозитории также могут находиться две независимые библиотеки:
+В этом репозитории:
 
-- `RockESP.lua` — ESP; документация: [ESP.md](ESP.md).
-- `RockWatermark.lua` — дополнительная самостоятельная версия watermark для использования без RockUI; документация: [WATERMARK.md](WATERMARK.md).
+- [RockUI.lua](RockUI.lua) — UI со встроенной watermark; документация в этом README.
+- [RockESP.lua](RockESP.lua) — независимая ESP-библиотека; документация: [ESP.md](ESP.md).
+- [logo.png](logo.png) — оригинальный логотип watermark.
 
-Каждая библиотека возвращает таблицу API. Их можно публиковать вместе или в отдельных репозиториях. Игровой скрипт и базы скинов для работы UI не нужны.
+Каждая Lua-библиотека возвращает таблицу API. Игровой скрипт и базы скинов для работы UI не нужны.
 
 ## Подключение
 
@@ -20,10 +23,10 @@ Watermark исходного Rock Hub **уже встроена в RockUI.lua**:
 В среде с поддержкой `loadstring` и HTTP можно загрузить raw-файл:
 
 ```lua
-local RockUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/OWNER/REPO/main/RockUI.lua"))()
+local RockUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/rockscripter/sklad/main/RockUI.lua"))()
 ```
 
-Замените `OWNER/REPO` и ветку на свои. Это способ подключения; полноценный демонстрационный скрипт в поставку не включён.
+Ссылка ведёт на `RockUI.lua` из ветки `main` репозитория `rockscripter/sklad`. Это способ подключения; полноценный демонстрационный скрипт в поставку не включён.
 
 ## Окно
 
@@ -114,7 +117,20 @@ local RockUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/OWNER/
 
 `window:ExportConfig()` также сохраняет позицию, масштаб, видимость, признак Used и Brand watermark. `window:ImportConfig(json, {Watermark=false})` позволяет пропустить эту часть. Конфигурации UI версии 1.0 без watermark по-прежнему загружаются. ResetConfig сбрасывает значения контролов, сохраняя положение и оформление watermark.
 
-Для картинки 1в1 используйте приложенный `logo.png`. В файловой среде работает исходная автоматическая загрузка PNG; LogoUrl можно заменить raw-ссылкой на файл в своём репозитории. В Studio загрузите PNG как Roblox asset и задайте LogoImage. При отсутствии картинки используется `rh`.
+Для картинки 1в1 используйте [logo.png](logo.png). Raw-ссылка логотипа в этом репозитории:
+
+`https://raw.githubusercontent.com/rockscripter/sklad/main/logo.png`
+
+Чтобы watermark загружала PNG именно из `sklad`, передайте в настройках окна:
+
+```lua
+Watermark = {
+    LogoUrl = "https://raw.githubusercontent.com/rockscripter/sklad/main/logo.png",
+    LogoPath = "sklad_logo.png",
+}
+```
+
+Это поля таблицы options для CreateWindow. В файловой среде используется загрузка PNG через writefile и getcustomasset / getsynasset. Без явного LogoUrl библиотека использует исходный URL Rock Hub. В Studio загрузите PNG как Roblox asset и задайте LogoImage. При отсутствии картинки используется `rh`.
 
 ## Вкладки и секции
 
@@ -330,4 +346,14 @@ ImportConfig сначала проверяет все применимые зн�
 
 ## Публикация
 
-Для UI со встроенной watermark достаточно загрузить в GitHub `RockUI.lua` и этот `README.md`; `logo.png` приложен для оригинального изображения логотипа. Самостоятельный `RockWatermark.lua` нужен только для использования watermark вне RockUI. Для ESP добавьте `RockESP.lua` и `ESP.md`.
+Файлы размещаются в корне ветки `main` репозитория [rockscripter/sklad](https://github.com/rockscripter/sklad):
+
+```text
+RockUI.lua
+RockESP.lua
+README.md
+ESP.md
+logo.png
+```
+
+Встроенная watermark входит в `RockUI.lua` и не требует отдельного модуля. При обновлении документации замените README.md и ESP.md в корне репозитория.

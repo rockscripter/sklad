@@ -4,9 +4,19 @@
 
 **Файл:** `RockESP.lua`. **Версия:** 1.0.0.
 
+**Репозиторий:** [rockscripter/sklad](https://github.com/rockscripter/sklad). **Ветка:** `main`. UI и встроенная watermark: [README.md](README.md).
+
 ## Подключение
 
-В Studio: ModuleScript с содержимым файла и `require` из LocalScript. В среде с loadstring / HTTP: загрузите raw `RockESP.lua` и выполните возвращённый chunk. Результат — таблица RockESP.
+В Studio: ModuleScript с содержимым файла и `require` из LocalScript.
+
+В среде с поддержкой loadstring / HTTP:
+
+```lua
+local RockESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/rockscripter/sklad/main/RockESP.lua"))()
+```
+
+Результат — таблица RockESP. Ссылка ведёт на файл из корня ветки `main` репозитория `rockscripter/sklad`.
 
 `RockESP.new(options?) → esp`
 
@@ -146,4 +156,4 @@ ExportConfig / ImportConfig сохраняют все настройки, вкл
 
 Для связи с UI передавайте изменения переключателей в `esp:Set("Chams", value)`, цветовых picker — в `esp:Set("Color", color)`, dropdown — в соответствующий строковый ключ. `OnRoleChanged` можно связать с системой уведомлений. Библиотека не зависит от конкретного UI.
 
-Для отдельного GitHub-репозитория достаточно `RockESP.lua` и этого документа, переименованного в README.md.
+В репозитории [rockscripter/sklad](https://github.com/rockscripter/sklad) файлы `RockESP.lua` и `ESP.md` находятся в корне ветки `main`. Основная документация UI со встроенной watermark находится в [README.md](README.md).
